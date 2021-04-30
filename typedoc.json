@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["./src/userTodo.ts",
+                  "./src/todoCollection.ts",
+                  "./src/todoItem.ts"
+],
+  "out": "./docs"
+}
