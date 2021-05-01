@@ -12,7 +12,7 @@
     "doc": "typedoc; touch ./docs/.nojekyll",
     "build": "tsc",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov",
-    "start": "tsc-watch --onSuccess \"node dist/ejercicio-pe102.js\""
+    "start": "tsc-watch --onSuccess \"node dist/ejercicio1.js\""
   },
   "keywords": [],
   "author": "Andrea Calero Caro",

@@ -1,5 +1,6 @@
 import {access, constants, watch} from 'fs';
 
+
 if (process.argv.length !== 3) {
   console.log('Please, specify a file');
 } else {
@@ -22,4 +23,17 @@ if (process.argv.length !== 3) {
   });
 }
   
+
 // Traza realizada
+/**
+ * 1) Inicialización
+ * ##############   #############   #########   #######
+ * # Call Stack #   # Event Log #   # Queue #   # Out #
+ * #------------#   #-----------#   #-------#   #-----#
+ * #            #   #           #   #       #   #     #
+ * ##############   #############   #########   #######
+ * 
+ * 2) 
+ * 
+ * 
+ */
