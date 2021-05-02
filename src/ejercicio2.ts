@@ -14,7 +14,7 @@ import {access, constants} from 'fs';
 function withPipe(path: string, charact: boolean, word: boolean, line: boolean): void {
     access(path, constants.F_OK, (err) => {
         if (err) {
-            console.log(`Ruta ${path}, no existe, compruebe la ruta`);
+            console.log(`Path ${path}, does not exist`);
         } else {
             const wc = spawn('wc', [path]);
             let result = '';
@@ -23,15 +23,15 @@ function withPipe(path: string, charact: boolean, word: boolean, line: boolean):
                 // Divide el string con los saltos de líneas, tabulaciones,etc.
                 const parts = result.split(/\s+/);
                 if (line) {
-                    const echo = spawn('echo', [`El fichero tiene: ${parseInt(parts[1])} lineas`]);
+                    const echo = spawn('echo', [`The file has: ${parseInt(parts[1])} lines`]);
                     echo.stdout.pipe(process.stdout);
                 }
                 if (word) {
-                    const echo = spawn('echo', [`, ${parseInt(parts[2])} palabras`]);
+                    const echo = spawn('echo', [`, ${parseInt(parts[2])} words`]);
                     echo.stdout.pipe(process.stdout);
                 }
                 if (charact) {
-                    const echo = spawn('echo', [`y ${parseInt(parts[3])} caracteres`]);
+                    const echo = spawn('echo', [`and ${parseInt(parts[3])} characters`]);
                     echo.stdout.pipe(process.stdout);
                 }
             });
@@ -40,7 +40,7 @@ function withPipe(path: string, charact: boolean, word: boolean, line: boolean):
 }
 
 /**
- * Función que se encarga de mostrar la información de un fichero mediante el uso del comando wc, sin pipe
+ * Función que muestra la información de un fichero mediante el uso del comando wc, sin pipe
  * @param path Ruta del fichero
  * @param charact Opción para mostar caracteres del fichero
  * @param word Opción para mostar palabras del fichero
@@ -49,7 +49,7 @@ function withPipe(path: string, charact: boolean, word: boolean, line: boolean):
 function withOutPipe(path: string, charact: boolean, word: boolean, line: boolean): void {
     access(path, constants.F_OK, (err) => {
         if (err) {
-            console.log(`Ruta ${path}, no existe, compruebe la ruta`);
+            console.log(`Path ${path}, does not exist`);
         } else {
             const wc = spawn('wc', [path]);
             let result = '';
@@ -58,13 +58,13 @@ function withOutPipe(path: string, charact: boolean, word: boolean, line: boolea
                 const parts = result.split(/\s+/);
                 let finalResult = '';
                 if (line) {
-                    finalResult+= `El fichero tiene: ${parseInt(parts[1])} lineas\n`;
+                    finalResult+= `The file has: ${parseInt(parts[1])} lines\n`;
                 }
                 if (word) {
-                    finalResult+= `, ${parseInt(parts[2])} palabras\n`;
+                    finalResult+= `, ${parseInt(parts[2])} words\n`;
                 }
                 if (charact) {
-                    finalResult+= `y ${parseInt(parts[3])} caracteres\n`;
+                    finalResult+= `and ${parseInt(parts[3])} characters\n`;
                 }
                 console.log(finalResult);
             });
@@ -78,31 +78,31 @@ function withOutPipe(path: string, charact: boolean, word: boolean, line: boolea
  */
 yargs.command({
     command: 'showinfo',
-    describe: 'Muestra la información de un fichero',
+    describe: 'Show the information of a file',
     builder: {
         filePath: {
-            describe: 'Ruta del fichero',
+            describe: 'Path of the file',
             demandOption: true,
             type: 'string',
         },
         pipe: {
             // Si es o no con pipe
-            describe: 'Uso del método pipe',
+            describe: 'Use the function with/without pipe',
             demandOption: true,
             type: 'boolean',
         },
         characters: {
-            describe: 'Recuento de caracteres',
+            describe: 'Count characters',
             demandOption: true,
             type: 'boolean',
         },
         words: {
-            describe: 'Recuento de palabras',
+            describe: 'Count words',
             demandOption: true,
             type: 'boolean',
         },
         lines: {
-            describe: 'Recuento de líneas',
+            describe: 'Count lines',
             demandOption: true,
             type: 'boolean',
         },
