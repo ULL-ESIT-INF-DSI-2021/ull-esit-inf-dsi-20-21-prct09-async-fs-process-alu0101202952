@@ -5,7 +5,7 @@
 > - Andrea Calero Caro
 
 ### Github Action: seguimiento continuo
-
+[![Coveralls](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-alu0101202952/actions/workflows/coveralls.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-alu0101202952/actions/workflows/coveralls.yml)
 
 
 ### Coveralls: cubrimiento

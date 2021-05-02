@@ -118,5 +118,4 @@ yargs.command({
     },
 });
 
-// Ejemplo de ejecución: node dist/ejercicio2.js showinfo --fichero=hola.txt --pipe=true --caracteres=true --palabras=true --lineas=true
 yargs.parse();
