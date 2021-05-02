@@ -12,15 +12,15 @@ import {access, constants} from 'fs';
 function isDirectory(path: string) {
     access(path, constants.F_OK, (err) => {
         if (err) {
-            console.log(`Ruta ${path}, no existe`);
+            console.log(`Path ${path}, does not exist`);
         } else {
             // O_DIRECTORY, indica que la apertura debe fallar si la ruta no es un directorio,
             // entonces es fichero
             fs.open(path, fs.constants.O_DIRECTORY, (err) => {
                 if (err) {
-                    console.log(`${path} es un fichero`);
+                    console.log(`${path} is a file`);
                 } else {
-                    console.log(`${path} es un directorio`);
+                    console.log(`${path} is a directory`);
                 }
             });
         }
@@ -34,13 +34,13 @@ function isDirectory(path: string) {
 function mkdirDirectory(path: string) {
     access(path, constants.F_OK, (err) => {
         if (err) {
-            console.log('No se ha podido crear el directorio porque ya existe');
+            console.log('The directory could not be created because it already exists');
         } else {
             fs.mkdir(path, (err) => {
                 if (err) {
-                    console.log('No se pudo crear el directorio');
+                    console.log('The directory could not be created');
                 } else {
-                    console.log('Directorio creado');
+                    console.log('Directory created');
                 }
             });
         }
@@ -55,7 +55,7 @@ function mkdirDirectory(path: string) {
 function lsDirectory(path: string) {
     access(path, constants.F_OK, (err) => {
         if (err) {
-            console.log(`Ruta ${path}, no existe`);
+            console.log(`Path ${path}, does not exist`);
         } else {
             // Para listar con ls hace falta la función spawn y los childprocess
             const ls = spawn('ls', [path]);
@@ -75,11 +75,11 @@ function lsDirectory(path: string) {
 function catFile(path: string) {
     access(path, constants.F_OK, (err) => {
         if (err) {
-            console.log(`Ruta ${path}, no existe`);
+            console.log(`Path ${path}, does not exist`);
         } else {
             fs.open(path, fs.constants.O_DIRECTORY, (err) => {
                 if (!err) {
-                    console.log(`${path} es un directorio, no un fichero`);
+                    console.log(`${path} is a directory but it is not a file`);
                 } else {
                     const cat = spawn('cat', [path]);
                     let result = '';
@@ -100,15 +100,15 @@ function catFile(path: string) {
 function removeFD(path: string) {
     access(path, constants.F_OK, (err) => {
         if (err) {
-            console.log(`Ruta ${path}, no existe`);
+            console.log(`Path ${path}, does not exist`);
         } else {
             // Opción para borra recursivo
             const rm = spawn('rm', ['-r', path]);
             rm.on('close', (err) => {
                 if (err) {
-                    console.log('No se ha podido eliminar el fichero');
+                    console.log('The file could not be deleted');
                 } else {
-                    console.log('Eliminado correctamente');
+                    console.log('File deleted');
                 }
             });
         }
@@ -123,14 +123,14 @@ function removeFD(path: string) {
 function move(src: string, dst: string) {
     access(src, constants.F_OK, (err) => {
         if (err) {
-            console.log(`Ruta ${src} o ${dst}, no existe, compruebe la ruta`);
+            console.log(`Path ${src} or ${dst} does not exist, check both path`);
         } else {
             const cp = spawn('cp', ['-r', src, dst]);
             cp.on('close', (err) => {
                 if (err) {
-                    console.log('No se ha podido mover el directorio');
+                    console.log('The directory could not be moved');
                 } else {
-                    console.log('Se ha copiado correctamente');
+                    console.log('Directory has been moved');
                 }
             });
         }
@@ -144,10 +144,10 @@ function move(src: string, dst: string) {
  */
 yargs.command( {
     command: 'cdd',
-    describe: 'Comprobar si es un directorio o un fichero',
+    describe: 'Check that if it is a directory or a file',
     builder: {
         path: {
-            describe: 'Ruta que se quiere comprobar',
+            describe: 'Path that you want to check',
             demandOption: true,
             type: 'string',
         },
@@ -165,10 +165,10 @@ yargs.command( {
  */
 yargs.command( {
     command: 'mkd',
-    describe: 'Crear un directorio',
+    describe: 'Create a directory',
     builder: {
         path: {
-            describe: 'Ruta donde se quiere crear el directorio',
+            describe: 'Path that you want to create the directory',
             demandOption: true,
             type: 'string',
         },
@@ -186,10 +186,10 @@ yargs.command( {
  */
 yargs.command( {
     command: 'lsf',
-    describe: 'Listar ficheros de un directorio',
+    describe: 'List files of directory',
     builder: {
         path: {
-            describe: 'Ruta que se quiere listar',
+            describe: 'Path of the directory you want to list',
             demandOption: true,
             type: 'string',
         },
@@ -207,10 +207,10 @@ yargs.command( {
  */
 yargs.command( {
     command: 'catf',
-    describe: 'Mostrar contenido de un fichero',
+    describe: 'Show content of a file',
     builder: {
         path: {
-            describe: 'Fichero que se quiere mostrar',
+            describe: 'File with the content to be displayed',
             demandOption: true,
             type: 'string',
         },
@@ -228,10 +228,10 @@ yargs.command( {
  */
 yargs.command( {
     command: 'rmfd',
-    describe: 'Eliminar un fichero o un directorio',
+    describe: 'Delete a file or directory',
     builder: {
         path: {
-            describe: 'Directorio que se quiere eliminar',
+            describe: 'File/Directory you want to delete',
             demandOption: true,
             type: 'string',
         },
@@ -249,15 +249,15 @@ yargs.command( {
  */
 yargs.command( {
     command: 'mvfd',
-    describe: 'Mover un directorio o fichero a una ruta especificada ',
+    describe: 'Move a directory or file to a specified path ',
     builder: {
         src: {
-            describe: 'Directorio que se quiere eliminar',
+            describe: 'Source path where the file/directory is',
             demandOption: true,
             type: 'string',
         },
         dst: {
-            describe: 'Directorio que se quiere eliminar',
+            describe: 'Destination path where the file/directory will be moved',
             demandOption: true,
             type: 'string',
         },
