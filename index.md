@@ -336,13 +336,7 @@ El funcionamiento, primero cree un directorio llamado prueba, en la raíz, y se 
 
 ![2](https://i.imgur.com/9BbmrnE.jpg)
 
-Luego se ejecuta el comando:
-
-![3](https://i.imgur.com/tpRs8NM.jpg)
-
-Y se comprueba que con dicho comando falla: 
-
-![4](https://i.imgur.com/qyPcjde.jpg)
+Luego se ejecuta el comando y se comprueba que con dicho comando falla.
 
 Sin embargo si el código lo modificamos para que sea en vez de mover, copiar y ejecutamos desde este punto si funciona, entonces funcioa con cp y no con mv_
 
