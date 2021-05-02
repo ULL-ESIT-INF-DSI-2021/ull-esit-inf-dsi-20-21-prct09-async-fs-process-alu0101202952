@@ -234,15 +234,124 @@ El problema que no consigo resolver es porqué los caracteres no me dan los que 
 ![withoutpipe](https://i.imgur.com/ayS4T6N.jpg)
 
 Esta función consistió en acumular en un string la cantidad de caracteres, palabras y líneas, esto está en **finalResult**
+
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━✧❂✧━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ### EJERCICIO 3
+
+Este ejercicio se plateó como copiando el código y pruebas de la práctica 8, porque por tema de tiempo, se tenía implementado el watchFile para la modificación de las notas, pero no se pudo terminar, quedando la estructura como:
+
+![estructura](https://i.imgur.com/SZ0LFQO.jpg)
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━✧❂✧━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ### EJERCICIO 4
 
+En este ejercicio se plantea desarrollar una aplicación que permita hacer de wrapper de los distintos comandos empleados en Linux para el manejo de ficheros y directorios. En concreto, la aplicación deberá permitir:
+
+1) Dada una ruta concreta, mostrar si es un directorio o un fichero.
+
+![4-1](https://i.imgur.com/2pdY89d.jpg)
+
+Para la implementación hice uso del método O_DIRECTORY de **constants**, este reconoce si un elemento es un directorio, y se puede emplear dicho principio para distinguir mediante dicho fallo si es un fichero y mostrar por pantalla que se trata de un fichero o si, por el contrario se trata de un directorio,
+
+El comando sería, con el ejemplo de fichero por ejemplo anterior:
+> `node dist/ejercicio4.js cdd --path=hola.txt`
+
+Como se puede observar, el comando invocante es **cdd**.
+
+Y por consola sacaría: 
+> `hola.txt is a file`
+
+A continuación se muestra un ejemplo de funcionamiento sería, tanto para directorio como para fichero:
+
+![funcionamiento](https://i.imgur.com/pmPMO66.jpg)
+
+2) Crear un nuevo directorio a partir de una nueva ruta que recibe como parámetro.
+
+![4-2](https://i.imgur.com/cL3JNTG.jpg)
+
+Para la implementación de este comando se basa en un simil del conocido comando **mkdir**, pero a la hora de plantearlo con el proceso de access resultó que sólo saca un error, como si no entrase y saltase al primer error de esta función, por ello la otra optativa que se planteó fue seguir el formato de la anterior práctica a la hora de crear el directorio, pero como no sé si es permitido no he procedido con ello. Pero que se conozca que se tiene en cuenta y no se sabe si estaría permitido.
+
+El comando sería:
+> `node dist/ejercicio4.js mkd --path=nuevodir`
+
+Como se puede observar, el comando invocante es **mkd**.
+
+Pero aunque el directorio no exista me sale el error primero que se muestra en la implementación de la función:
+
+![error](https://i.imgur.com/kuNeEzL.jpg)
+
+
+3 Listar los ficheros dentro de un directorio.
+
+![4-3](https://i.imgur.com/wYrRmAf.jpg)
+
+Para la implementación de este comando, me basé en el proceso access, spawn para su implementación como con otros comandos, este resultó más sencillo y su puesta en funcionamiento es correcta. Mostraré luego un ejemplo de ello.
+
+El comando sería:
+> `node dist/ejercicio4.js lsf --path=tests`
+
+En este caso analizo los ficheros que tenga el directorio tests, y este tiene dos, los dos de pruebas unitarias del ejercicio3:
+
+![funcionamiento](https://i.imgur.com/5KwMZjU.jpg)
+
+4) Mostrar el contenido de un fichero (similar a ejecutar el comando cat).
+
+La implementación de este comando es similar pero con la opción cat del método spawn.
+
+El comando sería:
+> `node dist/ejercicio4.js catf --path=hola.txt`
+
+Mostrándose correctamente:
+
+![funcionamiento](https://i.imgur.com/SUM2D00.jpg)
+
+
+5) Borrar ficheros y directorios.
+
+![4-5](https://i.imgur.com/laqvnpP.jpg)
+
+Para la implementación con el método spawn de rm, podremos borrar el fichero que se indique.
+
+El comando sería:
+> `node dist/ejercicio4.js rmfd --path=hola.txt`
+
+Y después de tiempo usándolo se borraría nuestro querido fichero hola.txt. El funcionamiento sería:
+
+![funci](https://i.imgur.com/TpIdoh9.jpg)
+
+6) Mover y copiar ficheros y/o directorios de una ruta a otra. Para este caso, la aplicación recibirá una ruta origen y una ruta destino. En caso de que la ruta origen represente un directorio, se debe copiar dicho directorio y todo su contenido a la ruta destino.
+
+![4-6](https://i.imgur.com/Ox9rSa9.jpg)
+
+El funcionamiento sería igual pero con mv.
+
+El comando sería:
+> `node dist/ejercicio4.js mvfd --src=prueba --dst=tests`
+
+El funcionamiento, primero cree un directorio llamado prueba, en la raíz, y se comprueba que en el directorio tests no está:
+
+![2](https://i.imgur.com/9BbmrnE.jpg)
+
+Luego se ejecuta el comando:
+
+![3](https://i.imgur.com/tpRs8NM.jpg)
+
+Y se comprueba que con dicho comando falla: 
+
+![4](https://i.imgur.com/qyPcjde.jpg)
+
+Sin embargo si el código lo modificamos para que sea en vez de mover, copiar y ejecutamos desde este punto si funciona, entonces funcioa con cp y no con mv_
+
+![cod](https://i.imgur.com/etNJRos.jpg)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━✧❂✧━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+![fumn](https://i.imgur.com/724YHCc.jpg)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━✧❂✧━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -255,40 +364,15 @@ Esta función consistió en acumular en un string la cantidad de caracteres, pal
 
 En esta parte tenemos que hacer momentáneamente el repositorio público en github para poder engancharlo con GitHub Actions y Coveralls y así hacer el seguimiento continuo de github Actions y luego el de coveralls quedando:
 
-Un cubrimiento de:
-
-![cubrimiento](https://i.imgur.com/67H6XU1.jpg)
-
 Copiando el token de coveralls por una parte en un fichero **.coveralls.yml**:
 
-![token](https://i.imgur.com/JAAj8av.jpg)
+![token](https://i.imgur.com/hK1QAaT.jpg)
 
 Luego realizaríamos el seguimiento continuo por GitHub Actions creando un propio workflows para coveralls:
 
-![coveralls workflow](https://i.imgur.com/SCmuLXh.jpg)
+![coveralls workflow](https://i.imgur.com/bQiVn0h.jpg)
 
 
-Y se vería el cubrimiento de coveralls dicho workflow en github action:
-
-![actions coveralls](https://i.imgur.com/hfIJ15z.jpg)
-
-Y se documenta en el fichero **README.md** los badges de GithubActions, Coveralls y SonarCloud respectivamente:
-
-![seguimeitno](https://i.imgur.com/x5h0Day.jpg)
-
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━✧❂✧━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-
- 
-▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
-
-
-## SONARCLOUD: BADGES
-
-Se accede a la web de SonarCloud, buscamos el repositorio respectivo y se accede a él y copiaríamos el badge de **markdown** que isnertamos en el README.md como antes vimos.
-
-![sonar](https://i.imgur.com/w3aZqch.jpg)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━✧❂✧━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -313,12 +397,12 @@ Y así finalizamos esta práctica e informe redactado en el archivo **index.md**
 ## CONCLUSIONES
 
 
-Conclusión sobre la práctica e informe, aquí plantearé la dinámica de la práctica y posibles dudas que me hayan surgido y solucionado. La práctica en sí hubieron partes del código, métodos en concreto que me dificultaron a la hora de mostrar el resultado como quise, resulta una práctica intuitiva y útil en caso de querer tener una gestión simple de notas y yo he enfocado esta práctica a una idea de una aplicación de organización de tareas, como una agenda, y un problema que resultó al hacer público el repo para engancharlo al sonar cloud fue porque no se mostraba el workflow de sonar cloud para proceder a hacerlo y básicamente esa parte sé como hacerlo pero no se muestra. Por el resto no he tenido dudas y con lo de sonarcloud pediré tutoría o usaré Github Issues.
+Conclusión sobre la práctica e informe: La dificultad la tuve a nivel de tiempo sobre todo de plantear el ejercicio 3, por ello no conseguí hacer nada solo copiar los ficheros de la práctica anterior, de resto todo decente. A la hora de engancharlo con coveralls no se hacía correctamente al igual que terminar de realizar el workflow de coveralls con giithub actions, causándome problemas que en otras prácticas no ha surgido.
 
 ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 ## BIBLIOGRAFÍA Y/O WEBGRAFÍA
 
 
-- [Enunciado práctica](https://ull-esit-inf-dsi-2021.github.io/prct08-filesystem-notes-app/)
-- [Informe documentación con Typedoc](http://127.0.0.1:5500/docs/index.html)
+- [Enunciado práctica](https://ull-esit-inf-dsi-2021.github.io/prct09-async-fs-process/)
+
